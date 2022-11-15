@@ -74,41 +74,50 @@ bool string_map<T>::noTieneSig(Nodo *a) {
 
 template<class T>
 void string_map<T>::erase(const string& clave) {
-    if(count(clave) != 1){
-        cout << "ingresaste una clave que no está definida";
-    }
-    stack<Nodo*> letrasDeLaPalabra;
-    //armar cola de letrasDeLaPalabra
-    Nodo* actual = raiz;
-    //van a llevar la cuenta de si borre, y cual fue el ultimo que borré
-    bool borre = false;
-    int posUltimoBorrado;
-    letrasDeLaPalabra.push(actual);
-    int i = 0;
-    while(i<clave.size()){
-        int posLetraVector = int(clave[i]);
-        actual = actual->siguientes[posLetraVector];
-        ++i;
-    }   // acá lo que tengo es una pila con la raiz y las letras de la palabra
-    for(int k = 0; k < letrasDeLaPalabra.size(); ++k){
-        //caso en el que los nodos que borro no tienen hijos
-        if(noTieneSig(letrasDeLaPalabra.top())){
-            Nodo* aborrar = letrasDeLaPalabra.top();
-            //delete aborrar->siguientes; al parecer no es necesario ya que es un vector de nullptr
-            delete aborrar->definicion;
-            letrasDeLaPalabra.pop();
-            posUltimoBorrado = int(clave[clave.size()-(k+1)]);
-            _size --;
-            actual = letrasDeLaPalabra.top();
-            actual->siguientes[posUltimoBorrado] = nullptr;
+   if(count(clave)!= 1){
+       cout << "debes ingresar una clave que este en el diccionario";
+   }
+   Nodo* actual = raiz;
+   stack<Nodo*> letrasDeLaPalabra;
+   letrasDeLaPalabra.push(actual);
+   int i = 0;
+   while(i< clave.size()){
+       int posLetraVector = int(clave[i]);
+       actual = actual->siguientes[posLetraVector];
+       letrasDeLaPalabra.push(actual);
+       i++;
+   }
+   int posUltimoBorrado;
+   //esto o un while(actual != raiz){}
+    for (int k = 0; k < clave.size()+1; ++k) {
+        if (k == 0){
+            if(noTieneSig(letrasDeLaPalabra.top())){
+                posUltimoBorrado = int(clave[clave.size()-1]);
+                delete letrasDeLaPalabra.top()->definicion;
+                letrasDeLaPalabra.pop();
+                actual = letrasDeLaPalabra.top();
+                actual->siguientes[posUltimoBorrado] = nullptr;
+            }
+            else{
+                T* aBorrar = letrasDeLaPalabra.top()->definicion;
+                letrasDeLaPalabra.top()->definicion = nullptr;
+                delete aBorrar;
+            }
         }
-        else if(not(noTieneSig(letrasDeLaPalabra.top()))){
-            T* aBorrar = letrasDeLaPalabra.top()->definicion;
-            letrasDeLaPalabra.top()->definicion = nullptr;
-            delete aBorrar;
-            _size --;
+        else{
+            while(noTieneSig(actual)){
+                posUltimoBorrado = int(clave[clave.size()-k-1]);
+                delete letrasDeLaPalabra.top()->definicion;
+                letrasDeLaPalabra.pop();
+                actual = letrasDeLaPalabra.top();
+                actual->siguientes[posUltimoBorrado] = nullptr;
+            }
+            return;
         }
     }
+
+
+
 }
 
 template <typename T>
