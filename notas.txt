@@ -1,0 +1,13 @@
+Vacio:
+un diccionario estará vacío si su raiz es == nullptr
+
+interfaz:
+--Constructor: OK.
+--Insertar: OK.
+--Empty: OK.
+--Count: OK.
+--Size: OK.
+--erase:
+--at MODIFICABLE:
+
+

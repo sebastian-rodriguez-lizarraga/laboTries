@@ -1,0 +1,4 @@
+ToolSet: w64 9.0 (local)@C:\Users\rodri\OneDrive\Documents\Algoritmos 1\CLion-2021.3.4.win\bin\mingw
+Options: 
+
+Options:-DCMAKE_MAKE_PROGRAM=C:/Users/rodri/OneDrive/Documents/Algoritmos 1/CLion-2021.3.4.win/bin/ninja/win/ninja.exe
